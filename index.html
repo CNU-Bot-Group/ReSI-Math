@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ReSI-Math: Exploring Recoverable Capability Frontiers for Efficient Reasoning Improvement" />
+  <title>ReSI-Math | Recoverable Capability Frontiers for Efficient Reasoning Improvement</title>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --surface-2: #f1f5f9;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --primary: #4338ca;
+      --primary-2: #7c3aed;
+      --accent: #db2777;
+      --success: #047857;
+      --warn: #b45309;
+      --shadow: 0 16px 45px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .nav {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #475569;
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 105px 0 82px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+      opacity: 0.16;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 470px;
+      height: 470px;
+      background: #818cf8;
+      right: -160px;
+      top: -190px;
+    }
+
+    .hero::after {
+      width: 360px;
+      height: 360px;
+      background: #f472b6;
+      left: -170px;
+      bottom: -210px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 13px;
+      margin-bottom: 22px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 5.6rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      margin-bottom: 24px;
+    }
+
+    .subtitle {
+      max-width: 980px;
+      margin: 0 auto 30px;
+      color: #475569;
+      font-size: clamp(1.18rem, 2.2vw, 1.65rem);
+      line-height: 1.45;
+      letter-spacing: -0.015em;
+    }
+
+    .authors {
+      display: flex;
+      justify-content: center;
+      gap: 9px 24px;
+      flex-wrap: wrap;
+      max-width: 980px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+      font-weight: 650;
+    }
+
+    .affiliation {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .hero-buttons {
+      margin-top: 34px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 750;
+      border: 1px solid var(--line);
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+    }
+
+    .btn-placeholder {
+      background: var(--surface);
+      color: #94a3b8;
+      cursor: default;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.09);
+    }
+
+    .btn-placeholder:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    section {
+      padding: 82px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      max-width: 780px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    .abstract {
+      max-width: 940px;
+      margin: 0 auto;
+      font-size: 1.08rem;
+      line-height: 1.85;
+      color: #334155;
+      text-align: justify;
+    }
+
+    .abstract strong {
+      color: var(--text);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 44px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2.2rem;
+      line-height: 1.05;
+      font-weight: 850;
+      letter-spacing: -0.045em;
+      margin-bottom: 9px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.91rem;
+    }
+
+    .idea-card {
+      max-width: 980px;
+      margin: 0 auto;
+      border: 1px solid #c7d2fe;
+      background: linear-gradient(135deg, #eef2ff, #faf5ff 58%, #fdf2f8);
+      border-radius: 24px;
+      padding: 34px 36px;
+      box-shadow: var(--shadow);
+    }
+
+    .idea-card h3 {
+      font-size: 1.45rem;
+      margin-bottom: 13px;
+      letter-spacing: -0.02em;
+    }
+
+    .idea-card p {
+      color: #334155;
+      font-size: 1.05rem;
+    }
+
+    .frontier-flow {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .flow-node {
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(99,102,241,0.24);
+      border-radius: 16px;
+      padding: 22px 16px;
+      text-align: center;
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .flow-node strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .flow-node span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .arrow {
+      color: var(--primary);
+      font-size: 1.7rem;
+      font-weight: 900;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .method-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 315px;
+      padding: 26px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 8px 26px rgba(15,23,42,0.04);
+    }
+
+    .method-index {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      background: var(--surface-2);
+      color: var(--primary);
+      font-weight: 850;
+    }
+
+    .method-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+      letter-spacing: -0.025em;
+    }
+
+    .method-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .method-card ul {
+      margin: 18px 0 0 18px;
+      color: #475569;
+      font-size: 0.9rem;
+    }
+
+    .method-card li + li {
+      margin-top: 8px;
+    }
+
+    .figure-placeholder {
+      margin-top: 36px;
+      min-height: 330px;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: var(--radius);
+      background: var(--surface);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 32px;
+      color: var(--muted);
+    }
+
+    .figure-placeholder strong {
+      display: block;
+      color: var(--text);
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .results {
+      background: var(--surface);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .result-panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .result-panel h3 {
+      font-size: 1.25rem;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .bar-row + .bar-row {
+      margin-top: 22px;
+    }
+
+    .bar-label-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 7px;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .bar-track {
+      height: 12px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+    }
+
+    .metric-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metric:last-child {
+      border-bottom: 0;
+    }
+
+    .metric .name {
+      color: #475569;
+    }
+
+    .metric .value {
+      font-size: 1.13rem;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .highlight {
+      color: var(--success);
+    }
+
+    .timeline {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline-item:last-child {
+      border-bottom: 0;
+    }
+
+    .timeline-date {
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .timeline-text {
+      color: #475569;
+    }
+
+    .citation {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .citation .section-kicker,
+    .citation .section-intro {
+      color: #94a3b8;
+    }
+
+    .citation h2 {
+      color: #fff;
+    }
+
+    .citation-box {
+      max-width: 960px;
+      margin: 34px auto 0;
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid #334155;
+      background: #111827;
+      color: #cbd5e1;
+      overflow-x: auto;
+      font: 0.88rem/1.65 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      padding: 38px 0 46px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 950px) {
+      .stat-grid,
+      .method-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .frontier-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+        justify-self: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 72px;
+      }
+
+      .stat-grid,
+      .method-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#top">ReSI-Math</a>
+      <nav class="nav-links">
+        <a href="#abstract">Abstract</a>
+        <a href="#idea">Core Idea</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#citation">Citation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="eyebrow">Recoverable Capability · RLVR · Mathematical Reasoning</div>
+
+        <h1>ReSI-Math</h1>
+
+        <p class="subtitle">
+          Exploring Recoverable Capability Frontiers for Efficient Reasoning Improvement
+        </p>
+
+        <div class="authors">
+          <span>Yao Cui</span>
+          <span>Zhen Yang</span>
+          <span>Yuandong Wang</span>
+          <span>Yangfu Zhu</span>
+          <span>Tianyu Wo</span>
+          <span>Zhenzhou Shao</span>
+        </div>
+
+        <div class="affiliation">
+          Project page for ReSI-Math
+        </div>
+
+        <div class="hero-buttons">
+          <!-- TODO: Replace # with the final arXiv URL after submission -->
+          <a class="btn btn-placeholder" href="#" onclick="return false;">📄 arXiv · Coming Soon</a>
+
+          <!-- TODO: Replace # with the public ReSI-Math repository URL -->
+          <a class="btn btn-placeholder" href="#" onclick="return false;">💻 Code · Coming Soon</a>
+
+          <!-- TODO: Replace with final project URL after GitHub Pages is enabled -->
+          <a class="btn btn-secondary" href="#method">🧭 Method</a>
+          <a class="btn btn-primary" href="#results">📊 Results</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="abstract">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Paper Overview</div>
+          <h2>Abstract</h2>
+        </div>
+
+        <div class="abstract">
+          Reinforcement learning with verifiable rewards (RLVR) has become an effective
+          approach for improving mathematical reasoning in large language models. However,
+          a fundamental question remains: <strong>when a model fails to solve a problem,
+          does it truly lack the underlying capability?</strong> ReSI-Math shows that direct
+          failure does not necessarily imply inability. Some reasoning failures can be
+          recovered by exploring the model's own trajectories, exposing a
+          <strong>recoverable capability frontier</strong>: a policy-dependent region where
+          solutions are not reliably generated through direct decoding but can be elicited
+          through trajectory-level search.
+          <br /><br />
+          ReSI-Math uses Self-Judge-guided evolutionary search to identify recoverable
+          failures under a fixed policy and adaptively selects frontier problems for
+          sequential RLVR as the policy evolves. On Qwen3-VL-8B, correct–incorrect
+          trajectory crossover produces 272 verifier-confirmed correct offspring from
+          621 attempts (43.8%). After three sequential one-shot RLVR stages, the average
+          performance on MATH500 and WE-MATH improves from 78.71 to 80.16.
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-number">43.8%</span>
+            <span class="stat-label">Verifier-confirmed correct crossover offspring</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">272 / 621</span>
+            <span class="stat-label">Successful crossover attempts on Qwen3-VL-8B</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">78.71 → 80.16</span>
+            <span class="stat-label">MATH500 + WE-MATH average after three stages</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">3</span>
+            <span class="stat-label">Sequential one-shot Solver-RLVR stages</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="idea">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Core Idea</div>
+          <h2>Failure is not always inability.</h2>
+          <p class="section-intro">
+            ReSI-Math separates what a policy can reliably express from what can still be
+            recovered through bounded search over its own trajectories.
+          </p>
+        </div>
+
+        <div class="idea-card">
+          <h3>Recoverable Capability Frontier</h3>
+          <p>
+            A problem can be difficult under direct generation while still admitting a
+            verifier-confirmed solution after structured trajectory recombination. This
+            creates a policy-dependent frontier between directly expressed capability,
+            recoverable capability, and currently unexplored capability.
+          </p>
+
+          <div class="frontier-flow">
+            <div class="flow-node">
+              <strong>Direct Generation</strong>
+              <span>Sample K trajectories under the current policy.</span>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-node">
+              <strong>Structured Search</strong>
+              <span>Self-Judge-guided evolutionary crossover probes latent recoverability.</span>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-node">
+              <strong>RLVR Consolidation</strong>
+              <span>Recovered problems become policy-improvement targets.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="method">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Methodology</div>
+          <h2>A four-stage recursive improvement loop</h2>
+          <p class="section-intro">
+            ReSI-Math decomposes capability exploration and learning into Elicit, Repair,
+            Consolidate, and Reprofile.
+          </p>
+        </div>
+
+        <div class="method-grid">
+          <article class="method-card">
+            <div class="method-index">01</div>
+            <h3>Elicit</h3>
+            <p>
+              Probe the current policy with multiple direct rollouts and use a rule-based
+              verifier to identify correct and failed trajectories.
+            </p>
+            <ul>
+              <li>Fixed-policy trajectory sampling</li>
+              <li>Verifier-confirmed C/F partition</li>
+              <li>Localize candidate frontier regions</li>
+            </ul>
+          </article>
+
+          <article class="method-card">
+            <div class="method-index">02</div>
+            <h3>Repair</h3>
+            <p>
+              Hold model parameters fixed and test whether failed reasoning can be transformed
+              into correct reasoning through Self-Judge-guided evolutionary search.
+            </p>
+            <ul>
+              <li>Blind / Guided Self-Judge</li>
+              <li>C–F and F–F crossover</li>
+              <li>Verifier-confirmed failure-to-success transitions</li>
+            </ul>
+          </article>
+
+          <article class="method-card">
+            <div class="method-index">03</div>
+            <h3>Consolidate</h3>
+            <p>
+              Convert recovered capability signals into parameter-level learning through
+              dual-signal RLVR.
+            </p>
+            <ul>
+              <li>Frontier-guided top-1 problem selection</li>
+              <li>Single-problem Solver-RLVR</li>
+              <li>Verifier-labeled Judge-RLVR supervision</li>
+            </ul>
+          </article>
+
+          <article class="method-card">
+            <div class="method-index">04</div>
+            <h3>Reprofile</h3>
+            <p>
+              Re-evaluate the candidate pool after each policy update because the most
+              informative frontier problem changes as the policy evolves.
+            </p>
+            <ul>
+              <li>Re-sample candidate problems</li>
+              <li>Update success profiles</li>
+              <li>Select the next frontier target</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="figure-placeholder">
+          <div>
+            <strong>Framework figure placeholder</strong>
+            Add the exported Figure 2 as <code>assets/resi_framework.png</code>, then replace
+            this block with an <code>&lt;img&gt;</code> tag.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="results">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Main Results</div>
+          <h2>Recoverability provides an efficient learning signal.</h2>
+          <p class="section-intro">
+            The main 8B results show both successful trajectory repair and cumulative gains
+            from policy-adaptive sequential one-shot RLVR.
+          </p>
+        </div>
+
+        <div class="results-grid">
+          <div class="result-panel">
+            <h3>Three-stage Solver-RLVR improvement</h3>
+
+            <div class="bar-row">
+              <div class="bar-label-row">
+                <span>Base</span>
+                <span>78.71</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 78.71%"></div>
+              </div>
+            </div>
+
+            <div class="bar-row">
+              <div class="bar-label-row">
+                <span>After three sequential one-shot RLVR stages</span>
+                <span>80.16</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width: 80.16%"></div>
+              </div>
+            </div>
+
+            <p style="margin-top:20px;color:#64748b;font-size:0.92rem;">
+              Average over MATH500 and WE-MATH.
+            </p>
+          </div>
+
+          <div class="result-panel">
+            <h3>Key quantitative findings</h3>
+
+            <div class="metric-list">
+              <div class="metric">
+                <span class="name">Crossover recovery</span>
+                <span class="value highlight">272 / 621</span>
+              </div>
+
+              <div class="metric">
+                <span class="name">Offspring success rate</span>
+                <span class="value highlight">43.8%</span>
+              </div>
+
+              <div class="metric">
+                <span class="name">Frontier-guided single-problem avg.</span>
+                <span class="value">54.16</span>
+              </div>
+
+              <div class="metric">
+                <span class="name">Random-selection baseline avg.</span>
+                <span class="value">53.31</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="figure-placeholder">
+          <div>
+            <strong>Rollout dynamics figure placeholder</strong>
+            Add Figure 1 as <code>assets/rollout_dynamics.png</code> to visualize how the
+            candidate pool shifts from the base policy through Q1–Q3.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="updates">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Project Status</div>
+          <h2>Updates</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2026-10</div>
+            <div class="timeline-text">
+              ReSI-Math manuscript and project materials prepared for public release.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">Coming soon</div>
+            <div class="timeline-text">
+              arXiv paper, public code, checkpoints / experiment assets, and reproducibility
+              documentation.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="citation" class="citation">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Citation</div>
+          <h2>Cite ReSI-Math</h2>
+          <p class="section-intro">
+            Replace this placeholder with the official arXiv / proceedings BibTeX once the
+            public record is available.
+          </p>
+        </div>
+
+        <div class="citation-box">@misc{resi_math_2026,
+  title  = {ReSI-Math: Exploring Recoverable Capability Frontiers for Efficient Reasoning Improvement},
+  author = {Yao Cui and Zhen Yang and Yuandong Wang and Yangfu Zhu and Tianyu Wo and Zhenzhou Shao},
+  year   = {2026},
+  note   = {arXiv preprint}
+}</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      ReSI-Math · Exploring Recoverable Capability Frontiers for Efficient Reasoning Improvement
+    </div>
+  </footer>
+</body>
+</html>
