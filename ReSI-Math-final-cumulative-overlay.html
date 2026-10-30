@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ReSI-Math: Exploring Recoverable Capability Frontiers for Efficient Reasoning Improvement" />
+  <title>ReSI-Math | Recoverable Capability Frontiers for Efficient Reasoning Improvement</title>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --surface-2: #f1f5f9;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --primary: #4338ca;
+      --primary-2: #7c3aed;
+      --accent: #db2777;
+      --success: #047857;
+      --warn: #b45309;
+      --shadow: 0 16px 45px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .nav {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #475569;
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 105px 0 82px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+      opacity: 0.16;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 470px;
+      height: 470px;
+      background: #818cf8;
+      right: -160px;
+      top: -190px;
+    }
+
+    .hero::after {
+      width: 360px;
+      height: 360px;
+      background: #f472b6;
+      left: -170px;
+      bottom: -210px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 13px;
+      margin-bottom: 22px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 5.6rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      margin-bottom: 24px;
+    }
+
+    .subtitle {
+      max-width: 980px;
+      margin: 0 auto 30px;
+      color: #475569;
+      font-size: clamp(1.18rem, 2.2vw, 1.65rem);
+      line-height: 1.45;
+      letter-spacing: -0.015em;
+    }
+
+    .authors {
+      display: flex;
+      justify-content: center;
+      gap: 9px 24px;
+      flex-wrap: wrap;
+      max-width: 980px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+      font-weight: 650;
+    }
+
+    .affiliation {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .hero-buttons {
+      margin-top: 34px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 750;
+      border: 1px solid var(--line);
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+    }
+
+    .btn-placeholder {
+      background: var(--surface);
+      color: #94a3b8;
+      cursor: default;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.09);
+    }
+
+    .btn-placeholder:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    section {
+      padding: 82px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      max-width: 780px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    .abstract {
+      max-width: 940px;
+      margin: 0 auto;
+      font-size: 1.08rem;
+      line-height: 1.85;
+      color: #334155;
+      text-align: justify;
+    }
+
+    .abstract strong {
+      color: var(--text);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 44px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2.2rem;
+      line-height: 1.05;
+      font-weight: 850;
+      letter-spacing: -0.045em;
+      margin-bottom: 9px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.91rem;
+    }
+
+    .idea-card {
+      max-width: 980px;
+      margin: 0 auto;
+      border: 1px solid #c7d2fe;
+      background: linear-gradient(135deg, #eef2ff, #faf5ff 58%, #fdf2f8);
+      border-radius: 24px;
+      padding: 34px 36px;
+      box-shadow: var(--shadow);
+    }
+
+    .idea-card h3 {
+      font-size: 1.45rem;
+      margin-bottom: 13px;
+      letter-spacing: -0.02em;
+    }
+
+    .idea-card p {
+      color: #334155;
+      font-size: 1.05rem;
+    }
+
+    .frontier-flow {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .flow-node {
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(99,102,241,0.24);
+      border-radius: 16px;
+      padding: 22px 16px;
+      text-align: center;
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .flow-node strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .flow-node span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .arrow {
+      color: var(--primary);
+      font-size: 1.7rem;
+      font-weight: 900;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .method-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 315px;
+      padding: 26px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 8px 26px rgba(15,23,42,0.04);
+    }
+
+    .method-index {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      background: var(--surface-2);
+      color: var(--primary);
+      font-weight: 850;
+    }
+
+    .method-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+      letter-spacing: -0.025em;
+    }
+
+    .method-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .method-card ul {
+      margin: 18px 0 0 18px;
+      color: #475569;
+      font-size: 0.9rem;
+    }
+
+    .method-card li + li {
+      margin-top: 8px;
+    }
+
+    .figure-placeholder {
+      margin-top: 36px;
+      min-height: 330px;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: var(--radius);
+      background: var(--surface);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 32px;
+      color: var(--muted);
+    }
+
+    .figure-placeholder strong {
+      display: block;
+      color: var(--text);
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .results {
+      background: var(--surface);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: stretch;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .result-panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .result-panel h3 {
+      font-size: 1.25rem;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+
+
+
+
+
+    .metric-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metric:last-child {
+      border-bottom: 0;
+    }
+
+    .metric .name {
+      color: #475569;
+    }
+
+    .metric .value {
+      font-size: 1.13rem;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .highlight {
+      color: var(--success);
+    }
+
+    .timeline {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline-item:last-child {
+      border-bottom: 0;
+    }
+
+    .timeline-date {
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .timeline-text {
+      color: #475569;
+    }
+
+    .citation {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .citation .section-kicker,
+    .citation .section-intro {
+      color: #94a3b8;
+    }
+
+    .citation h2 {
+      color: #fff;
+    }
+
+    .citation-box {
+      max-width: 960px;
+      margin: 34px auto 0;
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid #334155;
+      background: #111827;
+      color: #cbd5e1;
+      overflow-x: auto;
+      font: 0.88rem/1.65 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      white-space: pre-wrap;
+    }
+
+    .paper-figure {
+      max-width: 1100px;
+      margin: 40px auto 0;
+      padding: 18px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      box-shadow: 0 8px 26px rgba(15, 23, 42, 0.05);
+    }
+    
+    .paper-figure-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    
+    .figure-caption {
+      margin-top: 14px;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    
+
+    .training-curve-card {
+      max-width: 1100px;
+      margin: 36px auto 0;
+      padding: 28px 30px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      box-shadow: 0 8px 26px rgba(15, 23, 42, 0.05);
+    }
+
+    .training-curve-header {
+      margin-bottom: 24px;
+    }
+
+    .training-curve-header h3 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .training-curve-header p {
+      color: #64748b;
+      font-size: 0.94rem;
+    }
+
+
+    .training-curve-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 22px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .training-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .training-controls button {
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid #dbe2ea;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #334155;
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 750;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .training-controls button:hover {
+      border-color: #a5b4fc;
+      color: #4338ca;
+      background: #eef2ff;
+    }
+
+    .training-controls button:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+
+    .training-progress-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 6px;
+      color: #64748b;
+      font-size: 0.88rem;
+    }
+
+    .training-progress-row strong {
+      min-width: 34px;
+      color: #0f172a;
+      font-size: 1rem;
+      text-align: right;
+    }
+
+    .training-chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 430px;
+    }
+
+
+    .training-transition-banner {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.96);
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.90);
+      color: #ffffff;
+      font-size: 0.90rem;
+      font-weight: 750;
+      letter-spacing: -0.01em;
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.22);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .training-transition-banner.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .training-curve-note {
+      margin-top: 18px;
+      text-align: center;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .training-curve-note strong {
+      color: #0f172a;
+    }
+
+    footer {
+      padding: 38px 0 46px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 950px) {
+      .stat-grid,
+      .method-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .frontier-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+        justify-self: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 72px;
+      }
+
+      .stat-grid,
+      .method-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+  
+    .training-curve-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 22px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .training-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .training-controls button {
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid #dbe2ea;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #334155;
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 750;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .training-controls button:hover {
+      border-color: #a5b4fc;
+      color: #4338ca;
+      background: #eef2ff;
+    }
+
+    .training-controls button:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+
+    .training-progress-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 6px;
+      color: #64748b;
+      font-size: 0.88rem;
+    }
+
+    .training-progress-row strong {
+      min-width: 34px;
+      color: #0f172a;
+      font-size: 1rem;
+      text-align: right;
+    }
+
+    .training-chart-wrapper {
+        height: 340px;
+      }
+
+      .training-curve-card {
+        padding: 20px 16px;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#top">ReSI-Math</a>
+      <nav class="nav-links">
+        <a href="#abstract">Abstract</a>
+        <a href="#idea">Core Idea</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#citation">Citation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="eyebrow">Recoverable Capability · RLVR · Mathematical Reasoning</div>
+
+        <h1>ReSI-Math</h1>
+
+        <p class="subtitle">
+          Exploring Recoverable Capability Frontiers for Efficient Reasoning Improvement
+        </p>
+
+        <div class="authors">
+          <span>Yao Cui</span>
+          <span>Zhen Yang</span>
+          <span>Yuandong Wang</span>
+          <span>Yangfu Zhu</span>
+          <span>Tianyu Wo</span>
+          <span>Zhenzhou Shao</span>
+        </div>
+
+        <div class="affiliation">
+          Project page for ReSI-Math
+        </div>
+
+        <div class="hero-buttons">
+          <!-- TODO: Replace # with the final arXiv URL after submission -->
+          <a class="btn btn-placeholder" href="#" onclick="return false;">📄 arXiv · Coming Soon</a>
+
+          <!-- TODO: Replace # with the public ReSI-Math repository URL -->
+          <a class="btn btn-placeholder" href="#" onclick="return false;">💻 Code · Coming Soon</a>
+
+          <!-- TODO: Replace with final project URL after GitHub Pages is enabled -->
+          <a class="btn btn-secondary" href="#method">🧭 Method</a>
+          <a class="btn btn-primary" href="#results">📊 Results</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="abstract">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Paper Overview</div>
+          <h2>Abstract</h2>
+        </div>
+
+        <div class="abstract">
+          Reinforcement learning with verifiable rewards (RLVR) has become an effective
+          approach for improving mathematical reasoning in large language models. However,
+          a fundamental question remains: <strong>when a model fails to solve a problem,
+          does it truly lack the underlying capability?</strong> ReSI-Math shows that direct
+          failure does not necessarily imply inability. Some reasoning failures can be
+          recovered by exploring the model's own trajectories, exposing a
+          <strong>recoverable capability frontier</strong>: a policy-dependent region where
+          solutions are not reliably generated through direct decoding but can be elicited
+          through trajectory-level search.
+          <br /><br />
+          ReSI-Math uses Self-Judge-guided evolutionary search to identify recoverable
+          failures under a fixed policy and adaptively selects frontier problems for
+          sequential RLVR as the policy evolves. On Qwen3-VL-8B, correct–incorrect
+          trajectory crossover produces 272 verifier-confirmed correct offspring from
+          621 attempts (43.8%). After three sequential one-shot RLVR stages, the average
+          performance on MATH500 and WE-MATH improves from 78.71 to 80.16.
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-number">43.8%</span>
+            <span class="stat-label">Verifier-confirmed correct crossover offspring</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">272 / 621</span>
+            <span class="stat-label">Successful crossover attempts on Qwen3-VL-8B</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">78.71 → 80.16</span>
+            <span class="stat-label">MATH500 + WE-MATH average after three stages</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">3</span>
+            <span class="stat-label">Sequential one-shot Solver-RLVR stages</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="idea">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Core Idea</div>
+          <h2>Failure is not always inability.</h2>
+          <p class="section-intro">
+            ReSI-Math separates what a policy can reliably express from what can still be
+            recovered through bounded search over its own trajectories.
+          </p>
+        </div>
+
+        <div class="idea-card">
+          <h3>Recoverable Capability Frontier</h3>
+          <p>
+            A problem can be difficult under direct generation while still admitting a
+            verifier-confirmed solution after structured trajectory recombination. This
+            creates a policy-dependent frontier between directly expressed capability,
+            recoverable capability, and currently unexplored capability.
+          </p>
+
+          <div class="frontier-flow">
+            <div class="flow-node">
+              <strong>Direct Generation</strong>
+              <span>Sample K trajectories under the current policy.</span>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-node">
+              <strong>Structured Search</strong>
+              <span>Self-Judge-guided evolutionary crossover probes latent recoverability.</span>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="flow-node">
+              <strong>RLVR Consolidation</strong>
+              <span>Recovered problems become policy-improvement targets.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="method">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Methodology</div>
+          <h2>A four-stage recursive improvement loop</h2>
+          <p class="section-intro">
+            ReSI-Math decomposes capability exploration and learning into Elicit, Repair,
+            Consolidate, and Reprofile.
+          </p>
+        </div>
+
+        <div class="method-grid">
+          <article class="method-card">
+            <div class="method-index">01</div>
+            <h3>Elicit</h3>
+            <p>
+              Probe the current policy with multiple direct rollouts and use a rule-based
+              verifier to identify correct and failed trajectories.
+            </p>
+            <ul>
+              <li>Fixed-policy trajectory sampling</li>
+              <li>Verifier-confirmed C/F partition</li>
+              <li>Localize candidate frontier regions</li>
+            </ul>
+          </article>
+
+          <article class="method-card">
+            <div class="method-index">02</div>
+            <h3>Repair</h3>
+            <p>
+              Hold model parameters fixed and test whether failed reasoning can be transformed
+              into correct reasoning through Self-Judge-guided evolutionary search.
+            </p>
+            <ul>
+              <li>Blind / Guided Self-Judge</li>
+              <li>C–F and F–F crossover</li>
+              <li>Verifier-confirmed failure-to-success transitions</li>
+            </ul>
+          </article>
+
+          <article class="method-card">
+            <div class="method-index">03</div>
+            <h3>Consolidate</h3>
+            <p>
+              Convert recovered capability signals into parameter-level learning through
+              dual-signal RLVR.
+            </p>
+            <ul>
+              <li>Frontier-guided top-1 problem selection</li>
+              <li>Single-problem Solver-RLVR</li>
+              <li>Verifier-labeled Judge-RLVR supervision</li>
+            </ul>
+          </article>
+
+          <article class="method-card">
+            <div class="method-index">04</div>
+            <h3>Reprofile</h3>
+            <p>
+              Re-evaluate the candidate pool after each policy update because the most
+              informative frontier problem changes as the policy evolves.
+            </p>
+            <ul>
+              <li>Re-sample candidate problems</li>
+              <li>Update success profiles</li>
+              <li>Select the next frontier target</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="paper-figure">
+          <img
+            src="assets/Figure2-framework.png"
+            alt="Overview of ReSI-Math framework"
+            class="paper-figure-img"
+          >
+        
+          <p class="figure-caption">
+            <strong>Figure 2:</strong> Overview of ReSI-Math, including four stages:
+            Elicit, Repair, Consolidate, and Reprofile.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="results">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Main Results</div>
+          <h2>Recoverability provides an efficient learning signal.</h2>
+          <p class="section-intro">
+            The main 8B results show both successful trajectory repair and cumulative gains
+            from policy-adaptive sequential one-shot RLVR.
+          </p>
+        </div>
+
+        <div class="results-grid">
+          <div class="result-panel">
+            <h3>Key quantitative findings</h3>
+
+            <div class="metric-list">
+              <div class="metric">
+                <span class="name">Crossover recovery</span>
+                <span class="value highlight">272 / 621</span>
+              </div>
+
+              <div class="metric">
+                <span class="name">Offspring success rate</span>
+                <span class="value highlight">43.8%</span>
+              </div>
+
+              <div class="metric">
+                <span class="name">Frontier-guided single-problem avg.</span>
+                <span class="value">54.16</span>
+              </div>
+
+              <div class="metric">
+                <span class="name">Random-selection baseline avg.</span>
+                <span class="value">53.31</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="training-curve-card">
+          <div class="training-curve-header">
+            <div>
+              <h3>Policy-Adaptive Sequential RLVR Training Dynamics</h3>
+              <p>
+                DEV192 checkpoint trajectories for the 8B backbone.
+                Q1, Random-Q1, and Fixed-Sequential are first replayed together on the same 0–700 step axis.
+                Their completed trajectories remain visible while the selected Q1 checkpoint is translated to the origin to initialize Q2.
+                Q2 is then overlaid on the existing curves, followed by the same selected-checkpoint transition from Q2 to Q3.
+              </p>
+            </div>
+            <div class="training-controls" aria-label="Training curve animation controls">
+              <button id="trainingPlayBtn" type="button">▶ Play</button>
+              <button id="trainingPauseBtn" type="button">Ⅱ Pause</button>
+              <button id="trainingReplayBtn" type="button">↻ Replay</button>
+            </div>
+          </div>
+          <div class="training-progress-row">
+            <span>Current stage</span>
+            <strong id="trainingStepLabel">Q1 · 0</strong>
+          </div>
+          <div class="training-chart-wrapper">
+            <canvas id="trainingCurveChart"></canvas>
+            <div id="trainingTransitionBanner" class="training-transition-banner"></div>
+          </div>
+          <div class="training-curve-note">
+            Adaptive selected checkpoints:
+            <strong>Q1@500</strong>,
+            <strong>Q2@500</strong>,
+            and <strong>Q3@650</strong>.
+            &nbsp;|&nbsp;
+            Baseline DEV-best checkpoints:
+            <strong>Random-Q1@400</strong>
+            and <strong>Fixed-Sequential@250</strong>.
+          </div>
+        </div>
+
+        <div class="paper-figure">
+          <img
+            src="assets/Figure1-Motivation.png"
+            alt="Rollout-profile dynamics of ReSI-Math"
+            class="paper-figure-img"
+          >
+        
+          <p class="figure-caption">
+            <strong>Figure 1:</strong> Rollout-profile dynamics over the 28-problem
+            candidate pool and the validation set.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="updates">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Project Status</div>
+          <h2>Updates</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2026-10</div>
+            <div class="timeline-text">
+              ReSI-Math manuscript and project materials prepared for public release.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">Coming soon</div>
+            <div class="timeline-text">
+              arXiv paper, public code, checkpoints / experiment assets, and reproducibility
+              documentation.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="citation" class="citation">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Citation</div>
+          <h2>Cite ReSI-Math</h2>
+          <p class="section-intro">
+            Replace this placeholder with the official arXiv / proceedings BibTeX once the
+            public record is available.
+          </p>
+        </div>
+
+        <div class="citation-box">@misc{resi_math_2026,
+  title  = {ReSI-Math: Exploring Recoverable Capability Frontiers for Efficient Reasoning Improvement},
+  author = {Yao Cui and Zhen Yang and Yuandong Wang and Yangfu Zhu and Tianyu Wo and Zhenzhou Shao},
+  year   = {2026},
+  note   = {arXiv preprint}
+}</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      ReSI-Math · Exploring Recoverable Capability Frontiers for Efficient Reasoning Improvement
+    </div>
+  </footer>
+
+  <script>
+    const trainingChartCanvas = document.getElementById("trainingCurveChart");
+    const playBtn = document.getElementById("trainingPlayBtn");
+    const pauseBtn = document.getElementById("trainingPauseBtn");
+    const replayBtn = document.getElementById("trainingReplayBtn");
+    const stepLabel = document.getElementById("trainingStepLabel");
+    const transitionBanner = document.getElementById("trainingTransitionBanner");
+
+    if (trainingChartCanvas && window.Chart) {
+      const MAX_STEP = 700;
+      const STEP_INTERVAL = 50;
+      const PLAY_INTERVAL_MS = 620;
+      const TRANSITION_DURATION_MS = 1350;
+      const BETWEEN_STAGE_DELAY_MS = 550;
+
+      // =========================================================
+      // Q1 / Q2 / Q3 full checkpoint trajectories
+      // =========================================================
+      const q1 = [
+        { x: 0,   y: 75.0017, localStep: 0,   stage: "Q1" },
+        { x: 50,  y: 76.0433, localStep: 50,  stage: "Q1" },
+        { x: 100, y: 72.9158, localStep: 100, stage: "Q1" },
+        { x: 150, y: 76.0425, localStep: 150, stage: "Q1" },
+        { x: 200, y: 74.4767, localStep: 200, stage: "Q1" },
+        { x: 250, y: 75.0017, localStep: 250, stage: "Q1" },
+        { x: 300, y: 76.0433, localStep: 300, stage: "Q1" },
+        { x: 350, y: 75.0000, localStep: 350, stage: "Q1" },
+        { x: 400, y: 74.4808, localStep: 400, stage: "Q1" },
+        { x: 450, y: 75.0008, localStep: 450, stage: "Q1" },
+        { x: 500, y: 77.6033, localStep: 500, stage: "Q1", selected: true },
+        { x: 550, y: 75.5192, localStep: 550, stage: "Q1" },
+        { x: 600, y: 74.9992, localStep: 600, stage: "Q1" },
+        { x: 650, y: 75.5225, localStep: 650, stage: "Q1" },
+        { x: 700, y: 76.5625, localStep: 700, stage: "Q1" }
+      ];
+
+      const q2 = [
+        { x: 0,   y: 77.6033, localStep: 0,   stage: "Q2", inheritedStart: true },
+        { x: 50,  y: 75.0017, localStep: 50,  stage: "Q2" },
+        { x: 100, y: 73.4375, localStep: 100, stage: "Q2" },
+        { x: 150, y: 71.8750, localStep: 150, stage: "Q2" },
+        { x: 200, y: 73.4367, localStep: 200, stage: "Q2" },
+        { x: 250, y: 72.9158, localStep: 250, stage: "Q2" },
+        { x: 300, y: 74.9983, localStep: 300, stage: "Q2" },
+        { x: 350, y: 72.9150, localStep: 350, stage: "Q2" },
+        { x: 400, y: 77.6042, localStep: 400, stage: "Q2" },
+        { x: 450, y: 74.9975, localStep: 450, stage: "Q2" },
+        { x: 500, y: 77.0833, localStep: 500, stage: "Q2", selected: true },
+        { x: 550, y: 76.5625, localStep: 550, stage: "Q2" },
+        { x: 600, y: 77.6042, localStep: 600, stage: "Q2" },
+        { x: 650, y: 76.5625, localStep: 650, stage: "Q2" },
+        { x: 700, y: 76.5625, localStep: 700, stage: "Q2" }
+      ];
+
+      const q3 = [
+        { x: 0,   y: 77.0833, localStep: 0,   stage: "Q3", inheritedStart: true },
+        { x: 50,  y: 74.4783, localStep: 50,  stage: "Q3" },
+        { x: 100, y: 72.9150, localStep: 100, stage: "Q3" },
+        { x: 150, y: 75.0017, localStep: 150, stage: "Q3" },
+        { x: 200, y: 76.0433, localStep: 200, stage: "Q3" },
+        { x: 250, y: 73.4358, localStep: 250, stage: "Q3" },
+        { x: 300, y: 76.0433, localStep: 300, stage: "Q3" },
+        { x: 350, y: 77.6042, localStep: 350, stage: "Q3" },
+        { x: 400, y: 76.0392, localStep: 400, stage: "Q3" },
+        { x: 450, y: 76.0433, localStep: 450, stage: "Q3" },
+        { x: 500, y: 76.5625, localStep: 500, stage: "Q3" },
+        { x: 550, y: 76.5608, localStep: 550, stage: "Q3" },
+        { x: 600, y: 77.0825, localStep: 600, stage: "Q3" },
+        { x: 650, y: 78.1242, localStep: 650, stage: "Q3", selected: true },
+        { x: 700, y: 74.4800, localStep: 700, stage: "Q3" }
+      ];
+
+      const baseDev = 75.0017;
+
+      const randomQ1 = [
+        { x: 0,   y: baseDev,  localStep: 0,   stage: "Random-Q1" },
+        { x: 50,  y: 71.3525,  localStep: 50,  stage: "Random-Q1" },
+        { x: 100, y: 72.9192,  localStep: 100, stage: "Random-Q1" },
+        { x: 150, y: 75.5192,  localStep: 150, stage: "Random-Q1" },
+        { x: 200, y: 73.4358,  localStep: 200, stage: "Random-Q1" },
+        { x: 250, y: 76.0425,  localStep: 250, stage: "Random-Q1" },
+        { x: 300, y: 74.9992,  localStep: 300, stage: "Random-Q1" },
+        { x: 350, y: 74.4767,  localStep: 350, stage: "Random-Q1" },
+        { x: 400, y: 77.0842,  localStep: 400, stage: "Random-Q1", selected: true },
+        { x: 450, y: 75.0000,  localStep: 450, stage: "Random-Q1" },
+        { x: 500, y: 76.0425,  localStep: 500, stage: "Random-Q1" },
+        { x: 550, y: 77.0825,  localStep: 550, stage: "Random-Q1" },
+        { x: 600, y: 76.0408,  localStep: 600, stage: "Random-Q1" },
+        { x: 650, y: 74.9975,  localStep: 650, stage: "Random-Q1" },
+        { x: 700, y: 73.9600,  localStep: 700, stage: "Random-Q1" }
+      ];
+
+      const fixedSequential = [
+        { x: 0,   y: baseDev, localStep: 0,   stage: "Fixed-Sequential" },
+        { x: 50,  y: 74.4775, localStep: 50,  stage: "Fixed-Sequential" },
+        { x: 100, y: 75.5225, localStep: 100, stage: "Fixed-Sequential" },
+        { x: 150, y: 73.43583333333333, localStep: 150, stage: "Fixed-Sequential" },
+        { x: 200, y: 73.435, localStep: 200, stage: "Fixed-Sequential" },
+        { x: 250, y: 76.56416666666667, localStep: 250, stage: "Fixed-Sequential", selected: true },
+        { x: 300, y: 75.52083333333334, localStep: 300, stage: "Fixed-Sequential" },
+        { x: 350, y: 75.52166666666666, localStep: 350, stage: "Fixed-Sequential" },
+        { x: 400, y: 75.51833333333335, localStep: 400, stage: "Fixed-Sequential" },
+        { x: 450, y: 73.95833333333334, localStep: 450, stage: "Fixed-Sequential" },
+        { x: 500, y: 74.9975, localStep: 500, stage: "Fixed-Sequential" },
+        { x: 550, y: 74.4775, localStep: 550, stage: "Fixed-Sequential" },
+        { x: 600, y: 74.47833333333334, localStep: 600, stage: "Fixed-Sequential" },
+        { x: 650, y: 74.47666666666666, localStep: 650, stage: "Fixed-Sequential" },
+        { x: 700, y: 74.47833333333334, localStep: 700, stage: "Fixed-Sequential" }
+      ];
+
+      const stages = [
+        {
+          name: "Q1",
+          data: q1,
+          color: "#2563eb",
+          selectedStep: 500,
+          selectedY: 77.6033
+        },
+        {
+          name: "Q2",
+          data: q2,
+          color: "#16a34a",
+          selectedStep: 500,
+          selectedY: 77.0833
+        },
+        {
+          name: "Q3",
+          data: q3,
+          color: "#c026d3",
+          selectedStep: 650,
+          selectedY: 78.1242
+        }
+      ];
+
+      let stageIndex = 0;
+      let currentStep = 0;
+      let timer = null;
+      let transitionFrame = null;
+      let playing = false;
+
+      const transitionState = {
+        active: false,
+        fromX: 0,
+        toX: 0,
+        y: 0,
+        color: "#2563eb",
+        label: "",
+        nextStage: "",
+        progress: 0
+      };
+
+      function currentStage() {
+        return stages[stageIndex];
+      }
+
+      function visiblePoints(points, step) {
+        return points.filter(point => point.x <= step);
+      }
+
+      function pointRadiusCallback(context) {
+        const raw = context.raw;
+        if (!raw) return 0;
+        if (raw.inheritedStart) return 5;
+        if (raw.selected) return 7;
+        return 3;
+      }
+
+      function pointHoverRadiusCallback(context) {
+        const raw = context.raw;
+        if (!raw) return 0;
+        if (raw.selected) return 9;
+        return 5;
+      }
+
+      function pointBackgroundColorCallback(context) {
+        const raw = context.raw;
+        const color = context.dataset.borderColor;
+        if (!raw) return color;
+        return raw.selected ? "#ffffff" : color;
+      }
+
+      function pointBorderWidthCallback(context) {
+        const raw = context.raw;
+        if (!raw) return 0;
+        return raw.selected ? 3 : 1.5;
+      }
+
+      // =========================================================
+      // Overlay plugin:
+      // - current-stage badge
+      // - checkpoint translation animation
+      // =========================================================
+      const stageOverlayPlugin = {
+        id: "stageOverlayPlugin",
+
+        afterDraw(chart) {
+          const { ctx, chartArea, scales } = chart;
+          if (!chartArea || !scales.x || !scales.y) return;
+
+          const stage = currentStage();
+
+          ctx.save();
+
+          const badgeText =
+            stageIndex === 0
+              ? "Stage Q1 + baselines"
+              : `Stage ${stage.name}`;
+
+          ctx.font = "700 12px Inter, system-ui, sans-serif";
+          const textWidth = ctx.measureText(badgeText).width;
+          const badgeW = textWidth + 28;
+          const badgeH = 32;
+          const badgeX = chartArea.left + 8;
+          const badgeY = chartArea.top + 8;
+          const radius = 10;
+
+          ctx.fillStyle = "rgba(67, 56, 202, 0.08)";
+          ctx.strokeStyle = "rgba(67, 56, 202, 0.18)";
+          ctx.lineWidth = 1;
+
+          ctx.beginPath();
+          ctx.roundRect(badgeX, badgeY, badgeW, badgeH, radius);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = "#4338ca";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(
+            badgeText,
+            badgeX + badgeW / 2,
+            badgeY + badgeH / 2
+          );
+
+          if (transitionState.active) {
+            const easedX =
+              transitionState.fromX +
+              (transitionState.toX - transitionState.fromX) *
+                transitionState.progress;
+
+            const px = scales.x.getPixelForValue(easedX);
+            const py = scales.y.getPixelForValue(transitionState.y);
+            const originalPx =
+              scales.x.getPixelForValue(transitionState.fromX);
+
+            // trail from selected checkpoint toward origin
+            ctx.beginPath();
+            ctx.setLineDash([6, 5]);
+            ctx.strokeStyle = transitionState.color + "80";
+            ctx.lineWidth = 2.2;
+            ctx.moveTo(originalPx, py);
+            ctx.lineTo(px, py);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // moving selected checkpoint token
+            ctx.beginPath();
+            ctx.fillStyle = "#ffffff";
+            ctx.strokeStyle = transitionState.color;
+            ctx.lineWidth = 3.5;
+            ctx.arc(px, py, 9, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // directional arrow near origin
+            if (transitionState.progress > 0.75) {
+              const originX = scales.x.getPixelForValue(0);
+
+              ctx.beginPath();
+              ctx.strokeStyle = transitionState.color;
+              ctx.lineWidth = 2;
+              ctx.moveTo(originX + 18, py - 13);
+              ctx.lineTo(originX + 3, py);
+              ctx.lineTo(originX + 18, py + 13);
+              ctx.stroke();
+            }
+          }
+
+          ctx.restore();
+        }
+      };
+
+      // =========================================================
+      // Chart
+      // All datasets stay in the chart once revealed.
+      // =========================================================
+      const trainingChart = new Chart(trainingChartCanvas, {
+        type: "line",
+
+        data: {
+          datasets: [
+            {
+              label: "Q1",
+              data: [],
+              borderColor: "#2563eb",
+              backgroundColor: "#2563eb",
+              borderWidth: 3,
+              tension: 0.28,
+              pointRadius: pointRadiusCallback,
+              pointHoverRadius: pointHoverRadiusCallback,
+              pointBackgroundColor: pointBackgroundColorCallback,
+              pointBorderColor: "#2563eb",
+              pointBorderWidth: pointBorderWidthCallback,
+              fill: false
+            },
+            {
+              label: "Q2",
+              data: [],
+              borderColor: "#16a34a",
+              backgroundColor: "#16a34a",
+              borderWidth: 3,
+              tension: 0.28,
+              pointRadius: pointRadiusCallback,
+              pointHoverRadius: pointHoverRadiusCallback,
+              pointBackgroundColor: pointBackgroundColorCallback,
+              pointBorderColor: "#16a34a",
+              pointBorderWidth: pointBorderWidthCallback,
+              fill: false
+            },
+            {
+              label: "Q3",
+              data: [],
+              borderColor: "#c026d3",
+              backgroundColor: "#c026d3",
+              borderWidth: 3,
+              tension: 0.28,
+              pointRadius: pointRadiusCallback,
+              pointHoverRadius: pointHoverRadiusCallback,
+              pointBackgroundColor: pointBackgroundColorCallback,
+              pointBorderColor: "#c026d3",
+              pointBorderWidth: pointBorderWidthCallback,
+              fill: false
+            },
+            {
+              label: "Random-Q1",
+              data: [],
+              borderColor: "#f97316",
+              backgroundColor: "#f97316",
+              borderWidth: 2.4,
+              borderDash: [8, 6],
+              tension: 0.22,
+              pointRadius: pointRadiusCallback,
+              pointHoverRadius: pointHoverRadiusCallback,
+              pointBackgroundColor: pointBackgroundColorCallback,
+              pointBorderColor: "#f97316",
+              pointBorderWidth: pointBorderWidthCallback,
+              fill: false
+            },
+            {
+              label: "Fixed-Sequential",
+              data: [],
+              borderColor: "#475569",
+              backgroundColor: "#475569",
+              borderWidth: 2.4,
+              borderDash: [10, 6],
+              tension: 0.22,
+              pointRadius: pointRadiusCallback,
+              pointHoverRadius: pointHoverRadiusCallback,
+              pointBackgroundColor: pointBackgroundColorCallback,
+              pointBorderColor: "#475569",
+              pointBorderWidth: pointBorderWidthCallback,
+              fill: false
+            }
+          ]
+        },
+
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          parsing: false,
+
+          animation: {
+            duration: 380,
+            easing: "easeOutQuart"
+          },
+
+          interaction: {
+            mode: "nearest",
+            intersect: false
+          },
+
+          plugins: {
+            legend: {
+              position: "top",
+              labels: {
+                usePointStyle: true,
+                padding: 18,
+                font: {
+                  size: 13,
+                  weight: "600"
+                }
+              }
+            },
+
+            tooltip: {
+              backgroundColor: "#0f172a",
+              padding: 12,
+
+              callbacks: {
+                title(items) {
+                  if (!items.length) return "";
+                  return "Training step: " + items[0].parsed.x;
+                },
+
+                label(context) {
+                  const raw = context.raw;
+                  if (!raw) return "";
+
+                  let suffix = "";
+                  if (raw.selected) suffix = " · selected";
+                  if (raw.inheritedStart) suffix = " · inherited init";
+
+                  return (
+                    context.dataset.label +
+                    " · step " +
+                    raw.localStep +
+                    " · DEV192: " +
+                    raw.y.toFixed(4) +
+                    suffix
+                  );
+                }
+              }
+            }
+          },
+
+          scales: {
+            x: {
+              type: "linear",
+              min: 0,
+              max: MAX_STEP,
+
+              title: {
+                display: true,
+                text: "Local Training Step",
+                font: {
+                  weight: "600"
+                }
+              },
+
+              ticks: {
+                stepSize: 100
+              },
+
+              grid: {
+                color: "rgba(148, 163, 184, 0.14)"
+              }
+            },
+
+            y: {
+              min: 70,
+              max: 80,
+
+              title: {
+                display: true,
+                text: "DEV192 Score",
+                font: {
+                  weight: "600"
+                }
+              },
+
+              grid: {
+                color: "rgba(148, 163, 184, 0.18)"
+              }
+            }
+          }
+        },
+
+        plugins: [stageOverlayPlugin]
+      });
+
+      // =========================================================
+      // Frame rendering
+      // Previous stages remain fully visible.
+      // =========================================================
+      function renderCurrentFrame(animationMode = undefined) {
+        // Q1 + baselines
+        if (stageIndex === 0) {
+          trainingChart.data.datasets[0].data =
+            visiblePoints(q1, currentStep);
+
+          trainingChart.data.datasets[1].data = [];
+          trainingChart.data.datasets[2].data = [];
+
+          trainingChart.data.datasets[3].data =
+            visiblePoints(randomQ1, currentStep);
+
+          trainingChart.data.datasets[4].data =
+            visiblePoints(fixedSequential, currentStep);
+        }
+
+        // Q1 + baselines remain complete while Q2 grows
+        if (stageIndex === 1) {
+          trainingChart.data.datasets[0].data = q1;
+          trainingChart.data.datasets[3].data = randomQ1;
+          trainingChart.data.datasets[4].data = fixedSequential;
+
+          trainingChart.data.datasets[1].data =
+            visiblePoints(q2, currentStep);
+
+          trainingChart.data.datasets[2].data = [];
+        }
+
+        // Q1/Q2 + baselines remain complete while Q3 grows
+        if (stageIndex === 2) {
+          trainingChart.data.datasets[0].data = q1;
+          trainingChart.data.datasets[1].data = q2;
+          trainingChart.data.datasets[3].data = randomQ1;
+          trainingChart.data.datasets[4].data = fixedSequential;
+
+          trainingChart.data.datasets[2].data =
+            visiblePoints(q3, currentStep);
+        }
+
+        if (stepLabel) {
+          stepLabel.textContent =
+            `${currentStage().name} · ${currentStep}`;
+        }
+
+        trainingChart.update(animationMode);
+        updateButtons();
+      }
+
+      function updateButtons() {
+        if (playBtn) playBtn.disabled = playing;
+        if (pauseBtn) pauseBtn.disabled = !playing;
+      }
+
+      function clearActiveTimers() {
+        if (timer !== null) {
+          clearInterval(timer);
+          timer = null;
+        }
+
+        if (transitionFrame !== null) {
+          cancelAnimationFrame(transitionFrame);
+          transitionFrame = null;
+        }
+      }
+
+      function setBanner(message, show) {
+        if (!transitionBanner) return;
+
+        transitionBanner.textContent = message;
+
+        if (show) {
+          transitionBanner.classList.add("show");
+        } else {
+          transitionBanner.classList.remove("show");
+        }
+      }
+
+      function stopPlayback() {
+        playing = false;
+        clearActiveTimers();
+        transitionState.active = false;
+        setBanner("", false);
+        trainingChart.update("none");
+        updateButtons();
+      }
+
+      // =========================================================
+      // Selected checkpoint translation:
+      // selected x -> x=0, while every existing curve stays.
+      // =========================================================
+      function translateSelectedCheckpoint(onComplete) {
+        const stage = currentStage();
+        const nextStage = stages[stageIndex + 1];
+
+        transitionState.active = true;
+        transitionState.fromX = stage.selectedStep;
+        transitionState.toX = 0;
+        transitionState.y = stage.selectedY;
+        transitionState.color = stage.color;
+        transitionState.label =
+          `${stage.name}@${stage.selectedStep}`;
+        transitionState.nextStage = nextStage.name;
+        transitionState.progress = 0;
+
+        setBanner(
+          `${stage.name}@${stage.selectedStep} selected → initialize ${nextStage.name}`,
+          true
+        );
+
+        const startedAt = performance.now();
+
+        function animateTransition(now) {
+          const rawProgress = Math.min(
+            (now - startedAt) / TRANSITION_DURATION_MS,
+            1
+          );
+
+          // easeInOutCubic
+          const eased =
+            rawProgress < 0.5
+              ? 4 * rawProgress * rawProgress * rawProgress
+              : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
+
+          transitionState.progress = eased;
+
+          // No dataset is removed here.
+          trainingChart.update("none");
+
+          if (rawProgress < 1) {
+            transitionFrame =
+              requestAnimationFrame(animateTransition);
+          } else {
+            transitionFrame = null;
+            transitionState.active = false;
+            trainingChart.update("none");
+
+            setTimeout(() => {
+              setBanner("", false);
+              onComplete();
+            }, 300);
+          }
+        }
+
+        transitionFrame =
+          requestAnimationFrame(animateTransition);
+      }
+
+      function advanceStageOrFinish() {
+        if (stageIndex < stages.length - 1) {
+          translateSelectedCheckpoint(() => {
+            stageIndex += 1;
+            currentStep = 0;
+
+            // At x=0 the new inherited trajectory is added,
+            // while every previously completed curve remains.
+            renderCurrentFrame();
+
+            if (playing) {
+              setTimeout(
+                startStageTimer,
+                BETWEEN_STAGE_DELAY_MS
+              );
+            }
+          });
+        } else {
+          playing = false;
+          updateButtons();
+        }
+      }
+
+      function startStageTimer() {
+        if (!playing) return;
+
+        if (timer !== null) {
+          clearInterval(timer);
+          timer = null;
+        }
+
+        timer = setInterval(() => {
+          currentStep += STEP_INTERVAL;
+
+          if (currentStep > MAX_STEP) {
+            currentStep = MAX_STEP;
+          }
+
+          renderCurrentFrame();
+
+          if (currentStep >= MAX_STEP) {
+            clearInterval(timer);
+            timer = null;
+
+            setTimeout(() => {
+              if (playing) {
+                advanceStageOrFinish();
+              }
+            }, 750);
+          }
+        }, PLAY_INTERVAL_MS);
+      }
+
+      function play() {
+        if (playing) return;
+
+        // If everything has already finished, replay from start.
+        if (stageIndex === 2 && currentStep >= MAX_STEP) {
+          replay();
+          return;
+        }
+
+        playing = true;
+        updateButtons();
+        startStageTimer();
+      }
+
+      function pause() {
+        playing = false;
+        clearActiveTimers();
+
+        transitionState.active = false;
+        setBanner("", false);
+
+        trainingChart.update("none");
+        updateButtons();
+      }
+
+      function replay() {
+        stopPlayback();
+
+        stageIndex = 0;
+        currentStep = 0;
+        transitionState.active = false;
+
+        // Fully reset visual data.
+        trainingChart.data.datasets.forEach(ds => {
+          ds.data = [];
+        });
+
+        renderCurrentFrame("none");
+
+        playing = true;
+        updateButtons();
+
+        setTimeout(
+          startStageTimer,
+          250
+        );
+      }
+
+      if (playBtn) {
+        playBtn.addEventListener("click", play);
+      }
+
+      if (pauseBtn) {
+        pauseBtn.addEventListener("click", pause);
+      }
+
+      if (replayBtn) {
+        replayBtn.addEventListener("click", replay);
+      }
+
+      renderCurrentFrame("none");
+
+      // Auto-play once when first entering the chart.
+      let autoPlayed = false;
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (
+                entry.isIntersecting &&
+                !autoPlayed
+              ) {
+                autoPlayed = true;
+                play();
+                observer.disconnect();
+              }
+            });
+          },
+          {
+            threshold: 0.35
+          }
+        );
+
+        observer.observe(trainingChartCanvas);
+      } else {
+        autoPlayed = true;
+        play();
+      }
+    }
+  </script>
+
+</body>
+</html>
