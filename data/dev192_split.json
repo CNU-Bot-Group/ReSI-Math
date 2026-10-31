@@ -1,0 +1,46 @@
+{
+  "name": "DEV192",
+  "purpose": "checkpoint screening / selection support",
+  "used_for_rlvr_training": false,
+  "total_samples": 192,
+  "components": [
+    {
+      "benchmark": "MATH500",
+      "subset_name": "MATH96",
+      "num_samples": 96,
+      "historical_split_file": "benchmark/solver-benchmarks/math500_splits/math500_dev96_seed20260901.jsonl",
+      "historical_split_script": "scripts/split_math500_dev96_20260901.py",
+      "construction": {
+        "seed": 20260901,
+        "strategy": "proportional sampling over subject x level"
+      },
+      "evaluation_after_excluding_dev": {
+        "benchmark_name": "MATH404",
+        "num_samples": 404
+      }
+    },
+    {
+      "benchmark": "WE-MATH testmini",
+      "subset_name": "WeMath96",
+      "num_samples": 96,
+      "historical_split_file": "benchmark/We-Math/data/testmini_mini96.json",
+      "historical_runtime_root": "benchmark/We-Math-mini96",
+      "construction": {
+        "seed": 20260827,
+        "reasoning_groups": 29,
+        "concepts": 71
+      },
+      "evaluation_after_excluding_dev": {
+        "benchmark_name": "WE-MATH1644",
+        "num_samples": 1644
+      }
+    }
+  ],
+  "stagewise_usage": "After each Solver-RLVR stage, intermediate checkpoints are evaluated on DEV192 to form a checkpoint shortlist. Shortlisted checkpoints are then evaluated on the full benchmark suite, and the selected checkpoint is used to initialize the next stage.",
+  "redistribution": {
+    "raw_questions_included": false,
+    "images_included": false,
+    "reference_answers_included": false,
+    "note": "This artifact records the frozen split provenance and construction metadata without redistributing third-party benchmark content."
+  }
+}
