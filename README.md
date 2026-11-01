@@ -157,37 +157,30 @@ Candidate problems are profiled under the current policy using multiple sampled 
 
 For each candidate problem \(i\), empirical success probability is estimated as:
 
-\[
-p_i = \frac{N_{\mathrm{correct}}}{K}.
-\]
+$$
+p_i = \frac{N_{\mathrm{correct}}}{K}
+$$
 
 We measure uncertainty using:
 
-\[
-U_i = p_i(1-p_i).
-\]
+$$
+U_i = p_i(1-p_i)
+$$
 
 The final selection score combines policy uncertainty, semantic diversity, and output reliability:
 
-\[
-S_i
-=
-p_i(1-p_i)
-\,
-D_{\mathrm{sem},i}
-\,
-\mathrm{ParseRate}_i,
-\]
+$$
+S_i = p_i(1-p_i)\,D_{\mathrm{sem},i}\,\mathrm{ParseRate}_i
+$$
 
 where:
 
-- \(p_i\) measures empirical success probability;
-- \(D_{\mathrm{sem},i}\) measures semantic diversity among sampled trajectories;
-- \(\mathrm{ParseRate}_i\) measures output reliability.
+- $p_i$ measures empirical success probability;
+- $D_{\mathrm{sem},i}$ measures semantic diversity among sampled trajectories;
+- $\mathrm{ParseRate}_i$ measures output reliability.
 
 After each Solver-RLVR stage, the candidate pool is **re-profiled under the updated policy** before selecting the next problem.
 
----
 
 ### 3. Solver-RLVR
 
